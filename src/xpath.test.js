@@ -131,6 +131,21 @@ describe("xpath", function() {
 			});
 		});
 
+		it("can find //\\w+[\\w+=val] patterns incl. hyphens", function(done) {
+			parseString('<store><books><book><author>Tom</author><specific-genre>Science</specific-genre></book><book><author>Mike</author><specific-genre>Politics</specific-genre></book></books></store>', function(err, json) {
+				const res = xpath.find(json,"//books/book[specific-genre='Science']");
+				expect(res.length).to.equal(1);
+				done();
+			});
+		});
+
+		it("can find //\\w+[\\/@\\w+=val] patterns incl. hyphens", function(done) {
+			parseString('<vast><one unique-id="3"><val/></one><val/><two></two></vast>', function(err, json) {
+				expect(xpath.find(json,"//vast/one[@unique-id='3']")).to.deep.equal([{ "$": { "unique-id": "3" }, "val": [""] }]);
+				done();
+			});
+		});
+
 		it("can find //\\w+[\\w+=val]/\\w+ patterns", function(done) {
 			parseString('<store><books><book><author>Tom</author><genre>Science</genre></book><book><author>Mike</author><genre>Politics</genre></book></books></store>', function(err, json) {
 				expect(xpath.find(json,"//books/book[genre='Science']/author")).to.deep.equal(["Tom"]);

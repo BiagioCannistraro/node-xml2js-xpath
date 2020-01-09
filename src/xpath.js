@@ -9,8 +9,8 @@ const NAME_START_CHAR = 'A-Za-z:_\xC0-\xD6\xD8-\xF6\xF8-\u02FF\u0370-\u037D' +
 	'\uF900-\uFDCF\uFDF0-\uFFFD'
 const NAME_CHAR = `${NAME_START_CHAR}.0-9·\u0300-\u036F\u203F-\u2040-`
 const TAG_NAME = `[${NAME_START_CHAR}][${NAME_CHAR}]*`
-const TAG_AND_PROP = `(${TAG_NAME})\\[@([\\w:]+)='([^']+)'\\]`
-const TAG_AND_CHILD = `(${TAG_NAME})\\[([\\w:]+)='([^']+)'\\]`
+const TAG_AND_PROP = `(${TAG_NAME})\\[@(${TAG_NAME})='([^']+)'\\]`
+const TAG_AND_CHILD = `(${TAG_NAME})\\[(${TAG_NAME})='([^']+)'\\]`
 
 // Given a JSON document returned by xml2js (with _ and $ keys), return the
 // combined text value of the tags.
